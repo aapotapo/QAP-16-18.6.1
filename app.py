@@ -35,14 +35,14 @@ def handle_text(message: telebot.types.Message):
         if len(values) != 3:
             raise APIException(help_text())
         from_symbol, to_symbol, amount = values
-        rate = ExchangeRates.rate(from_symbol, to_symbol)
+        rate = ExchangeRates.rate(from_symbol.upper(), to_symbol.upper())
     except APIException as e:
         bot.reply_to(message, e)
     except RuntimeError as e:
         bot.reply_to(message, e)
     else:
         result = round(float(amount) * rate, 2)
-        text = f"{amount} {from_symbol} в {to_symbol} = {result}"
+        text = f"{amount} {from_symbol.upper()} в {to_symbol.upper()} = {result}"
         bot.send_message(message.chat.id, text)
 
 
