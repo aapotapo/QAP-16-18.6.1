@@ -48,5 +48,5 @@ def handle_text(message: telebot.types.Message):
         print(text)
         bot.send_message(message.chat.id, text)
 
-
-bot.polling()
+if __name__ == '__main__':
+     bot.infinity_polling()
