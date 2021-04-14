@@ -37,11 +37,14 @@ def handle_text(message: telebot.types.Message):
         base, quote, amount = values
         result = ExchangeRates.get_price(base.upper(), quote.upper(), amount)
     except APIException as e:
+        print(e)
         bot.reply_to(message, e)
     except RuntimeError as e:
+        print(e)
         bot.reply_to(message, e)
     else:
         text = f"{amount} {base.upper()} в {quote.upper()} = {result}"
+        print(text)
         bot.send_message(message.chat.id, text)
 
 
