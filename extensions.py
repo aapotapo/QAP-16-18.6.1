@@ -9,15 +9,17 @@ class APIException(RuntimeError):
 
 class ExchangeRates:
     @staticmethod
-    def rate(from_symbol, to_symbol):
+    def get_price(base, quote, amount):
         url = CRYPTOCOMPAREAPI + 'price'
         url += '?app_key=' + CRYPTOCOMPAREAPI_KEY
-        url += '&fsym=' + from_symbol + '&tsyms=' + to_symbol
+        url += '&fsym=' + base + '&tsyms=' + quote
         response = requests.get(url)
         try:
-            return json.loads(response.content)[to_symbol]
+            rate = json.loads(response.content)[quote]
+            return round(float(amount) * rate, 2)
         except KeyError:
             raise RuntimeError('Не удалось получить курс обмена')
+
 
     @staticmethod
     def supported_symbols():

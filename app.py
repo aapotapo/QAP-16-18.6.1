@@ -34,15 +34,14 @@ def handle_text(message: telebot.types.Message):
         values = message.text.split(' ')
         if len(values) != 3:
             raise APIException(help_text())
-        from_symbol, to_symbol, amount = values
-        rate = ExchangeRates.rate(from_symbol.upper(), to_symbol.upper())
+        base, quote, amount = values
+        result = ExchangeRates.get_price(base.upper(), quote.upper(), amount)
     except APIException as e:
         bot.reply_to(message, e)
     except RuntimeError as e:
         bot.reply_to(message, e)
     else:
-        result = round(float(amount) * rate, 2)
-        text = f"{amount} {from_symbol.upper()} в {to_symbol.upper()} = {result}"
+        text = f"{amount} {base.upper()} в {quote.upper()} = {result}"
         bot.send_message(message.chat.id, text)
 
 
