@@ -1,4 +1,5 @@
 import telebot
+
 from config import TOKEN
 from extensions import APIException, ExchangeRates
 
@@ -48,4 +49,4 @@ def handle_text(message: telebot.types.Message):
         bot.send_message(message.chat.id, text)
 
 
-bot.polling(none_stop=True)
+bot.polling()
